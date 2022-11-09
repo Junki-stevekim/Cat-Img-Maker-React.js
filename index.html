@@ -23,47 +23,78 @@
       gap: 15px;
     }
     .favorites img {
-      width: 150px;
+      width: 350px;
     }
   </style>
   <body>
     <div id="app"></div>
-    <!-- <h1>1번째 고양이 가라사대</h1>
-    <form>
-      <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-      <button type="submit">생성</button>
-    </form>
-    <div class="main-card">
-      <img
-        src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
-        alt="고양이"
-        width="400"
-      />
-      <button>🤍</button>
-    </div>
+    <!-- 
+    
+    
      -->
+
+     <!-- 리액트 라이브러리 설정문 -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
     <script type="text/babel"> // 리액트 코드 작성 할 부분
       console.log("야옹");
       //리액트 맛보기
       const catItem =(
         <li>
-          <img src="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
+          <img src="https://cataas.com/cat/funny/says/React" />
           </li>
       );
 
+      // 자바스크립트 변수를 리액트 문에서 쓰는법 -> {}를 이용한다
+     
       const favorites =(
         <ul class="favorites">
-       {catItem}
-       {catItem}
-       {catItem}
+        {catItem}  
+        {catItem}
+        {catItem}
     </ul>
       );
 
-          const 여기다가그려 =document.querySelector("#app");
-      ReactDOM.render(favorites, 여기다가그려);
+      const mainCard =(
+        <div class="main-card">
+      <img
+        src="https://cataas.com/cat/cute/says/react"
+        alt="고양이"
+        width="400"
+      />
+      <button>🤍</button>
+    </div>
+
+      );
+
+
+    const form =(
+      <form>
+      <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
+      <button type="submit">생성</button>
+    </form>
+    );
+
+    const h1 =(
+      <h1>1번째 고양이 가라사대</h1>
+    );
+
+      const app = (
+      <div>
+        {h1}
+      {mainCard}
+      {favorites}
+      {form}
+      </div>
+      );
+      
+      // React의 렌더값은 항상 최상위 tag 한개뿐. 그래서 tag를 div나 다른태그로 나누어준다
+      const 여기다가그려 =document.querySelector("#app");
+      ReactDOM.render(app, 여기다가그려);
+
+
 
     </script>
   </body>
