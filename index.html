@@ -28,10 +28,7 @@
   </style>
   <body>
     <div id="app"></div>
-    <!-- 
     
-    
-     -->
 
      <!-- 리액트 라이브러리 설정문 -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -40,59 +37,69 @@
     
     <script type="text/babel"> // 리액트 코드 작성 할 부분
       console.log("야옹");
-      //리액트 맛보기
-      const catItem =(
+
+      // 리액트를 사용하는 가장큰 이유 -> 반복되는 ui 즉 component 사용을 위함
+      // component 작성규칙 -> 항상 첫글자는 대문자
+      // 인자값을 넘겨줄때 항상 porps를 사용
+      // 화살표 함수 변수명 = () => {} 사용.. 제대로공부하자!
+
+        const Title = (props) => {
+        return <h1>{props.children}</h1>;
+        };
+
+        const form = (
+        <form>
+        <input
+          type="text"
+          name="name"
+          placeholder="영어 대사를 입력해주세요"
+        />
+        <button type="submit">생성</button>
+        </form>
+        );
+
+        function CatItem(props) {
+        return (
         <li>
-          <img src="https://cataas.com/cat/funny/says/React" />
-          </li>
-      );
+          <img src={props.img} />
+        </li>
+        );
+        }
 
-      // 자바스크립트 변수를 리액트 문에서 쓰는법 -> {}를 이용한다
-     
-      const favorites =(
+        function Favorites() {
+        return (
         <ul class="favorites">
-        {catItem}  
-        {catItem}
-        {catItem}
-    </ul>
-      );
+          <CatItem img="https://cataas.com//cat/cute/says/inflearn" />
+          <CatItem img="https://cataas.com/cat/funny/says/JavaScript" />
+        </ul>
+        );
+        }
 
-      const mainCard =(
+        const MainCard = () => {
+        return (
         <div class="main-card">
-      <img
-        src="https://cataas.com/cat/cute/says/react"
-        alt="고양이"
-        width="400"
-      />
-      <button>🤍</button>
-    </div>
+          <img
+            src="https://cataas.com/cat/cute/says/react"
+            alt="고양이"
+            width="400"
+          />
+          <button>🤍</button>
+        </div>
+        );
+        };
 
-      );
+        const app = (
+        <div>
+        <Title>1번째 고양이 가라사대</Title>
+        {form}
+        <MainCard />
+        <Favorites />
+        </div>
+        );
 
+        const 여기다가그려 = document.querySelector("#app");
 
-    const form =(
-      <form>
-      <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-      <button type="submit">생성</button>
-    </form>
-    );
-
-    const h1 =(
-      <h1>1번째 고양이 가라사대</h1>
-    );
-
-      const app = (
-      <div>
-        {h1}
-      {mainCard}
-      {favorites}
-      {form}
-      </div>
-      );
-      
-      // React의 렌더값은 항상 최상위 tag 한개뿐. 그래서 tag를 div나 다른태그로 나누어준다
-      const 여기다가그려 =document.querySelector("#app");
-      ReactDOM.render(app, 여기다가그려);
+        ReactDOM.render(app, 여기다가그려);
 
 
 
