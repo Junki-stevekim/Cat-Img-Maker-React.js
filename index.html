@@ -22,9 +22,7 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-    .favorites img {
-      width: 350px;
-    }
+  
   </style>
   <body>
     <div id="app"></div>
@@ -47,7 +45,7 @@
         return <h1>{props.children}</h1>;
         };
 
-        const form = (
+        const Form =() => (
         <form>
         <input
           type="text"
@@ -58,28 +56,32 @@
         </form>
         );
 
+
+         // React css 설정하기.{{ObjectKey, Value 값}}
+         // Value는 항상 String 처리
         function CatItem(props) {
         return (
         <li>
-          <img src={props.img} />
+          <img src={props.img} style={{width:'150px',}} />
         </li>
         );
         }
 
         function Favorites() {
         return (
-        <ul class="favorites">
+        <ul className="favorites">
           <CatItem img="https://cataas.com//cat/cute/says/inflearn" />
           <CatItem img="https://cataas.com/cat/funny/says/JavaScript" />
         </ul>
         );
         }
 
-        const MainCard = () => {
+        // 항상 인자값을 줘야되는것이 아니라 ({value}) 값으로 Object 값을 받아올수있다.
+        const MainCard = ({img}) => {
         return (
-        <div class="main-card">
+        <div className="main-card">
           <img
-            src="https://cataas.com/cat/cute/says/react"
+            src={img}
             alt="고양이"
             width="400"
           />
@@ -91,12 +93,13 @@
         const app = (
         <div>
         <Title>1번째 고양이 가라사대</Title>
-        {form}
-        <MainCard />
+        <Form />
+        <MainCard img="https://cataas.com/cat/cute/says/react"/>
         <Favorites />
         </div>
         );
 
+        // React의 렌더값은 항상 최상위 tag 한개뿐. 그래서 tag를 div나 다른태그로 나누어준다
         const 여기다가그려 = document.querySelector("#app");
 
         ReactDOM.render(app, 여기다가그려);
