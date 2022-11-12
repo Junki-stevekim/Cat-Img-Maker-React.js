@@ -45,8 +45,13 @@
         return <h1>{props.children}</h1>;
         };
 
-        const Form =() => (
-        <form>
+        const Form =() => {
+          function handleFormSubmit(){
+            console.log("폼전송됨");
+          }
+          
+          return(
+        <form onSubmit={handleFormSubmit}>
         <input
           type="text"
           name="name"
@@ -55,7 +60,7 @@
         <button type="submit">생성</button>
         </form>
         );
-
+      };
 
          // React css 설정하기.{{ObjectKey, Value 값}}
          // Value는 항상 String 처리
@@ -78,14 +83,21 @@
 
         // 항상 인자값을 줘야되는것이 아니라 ({value}) 값으로 Object 값을 받아올수있다.
         const MainCard = ({img}) => {
-        return (
+          function handleHeartClick(){
+            console.log("하트눌렀음");
+          }
+          function handleHeartMouseOver(){
+            console.log("마우스지나감");
+          }
+        
+          return (
         <div className="main-card">
           <img
             src={img}
             alt="고양이"
             width="400"
           />
-          <button>🤍</button>
+          <button onClick={handleHeartClick} onMouseOver={handleHeartMouseOver}>🤍</button>
         </div>
         );
         };
