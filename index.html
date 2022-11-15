@@ -46,7 +46,8 @@
         };
 
         const Form =() => {
-          function handleFormSubmit(){
+          function handleFormSubmit(event){
+            event.preventDefault();
             console.log("폼전송됨");
           }
           
