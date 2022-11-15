@@ -45,21 +45,17 @@
         return <h1>{props.children}</h1>;
         };
 
-        const Form =() => {
-          function handleFormSubmit(event){
-            event.preventDefault();
-            console.log("폼전송됨");
-          }
-          
-          return(
-        <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="영어 대사를 입력해주세요"
-        />
-        <button type="submit">생성</button>
-        </form>
+        // 폼이 전송될때마다 count +! 해주기 => n번째 고양이 가라사대
+        const Form = ({ handleFormSubmit }) => {
+        return (
+          <form onSubmit={handleFormSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="영어 대사를 입력해주세요"
+            />
+            <button type="submit">생성</button>
+          </form>
         );
       };
 
@@ -76,8 +72,8 @@
         function Favorites() {
         return (
         <ul className="favorites">
-          <CatItem img="https://cataas.com//cat/cute/says/inflearn" />
-          <CatItem img="https://cataas.com/cat/funny/says/JavaScript" />
+          <CatItem img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
+          <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
         </ul>
         );
         }
@@ -103,19 +99,32 @@
         );
         };
 
-        const app = (
-        <div>
-        <Title>1번째 고양이 가라사대</Title>
-        <Form />
-        <MainCard img="https://cataas.com/cat/cute/says/react"/>
-        <Favorites />
-        </div>
+        //app 을 component로 변환 -> form과 title 을 함께 상태변경하기위해
+        const App = () => {
+        const [counter, setCounter] = React.useState(1);
+
+        console.log("카운터", counter);
+        // form이 전송될때마다 counter설정을 위해 fuction 자체를 props로 받아준다.->lifting state up
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          console.log("폼 전송됨");
+          setCounter(counter + 1);
+        }
+
+        return (
+          <div>
+            <Title>{counter}번째 고양이 가라사대</Title>
+            <Form handleFormSubmit={handleFormSubmit} />
+            <MainCard img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
+            <Favorites />
+          </div>
         );
+      };
 
         // React의 렌더값은 항상 최상위 tag 한개뿐. 그래서 tag를 div나 다른태그로 나누어준다
         const 여기다가그려 = document.querySelector("#app");
 
-        ReactDOM.render(app, 여기다가그려);
+        ReactDOM.render(<App />, 여기다가그려);
 
 
 
