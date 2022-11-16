@@ -59,64 +59,65 @@
         );
       };
 
-         // React css 설정하기.{{ObjectKey, Value 값}}
-         // Value는 항상 String 처리
-        function CatItem(props) {
+      function CatItem(props) {
         return (
-        <li>
-          <img src={props.img} style={{width:'150px',}} />
-        </li>
+          <li>
+            <img src={props.img} style={{ width: "150px" }} />
+          </li>
         );
-        }
+      }
 
-        function Favorites() {
+      function Favorites({ favorites }) {
         return (
-        <ul className="favorites">
-          <CatItem img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
-          <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
-        </ul>
+          <ul className="favorites">
+            {favorites.map((cat) => (
+              <CatItem img={cat} key={cat} />
+            ))}
+          </ul>
         );
-        }
+      }
 
-        // 항상 인자값을 줘야되는것이 아니라 ({value}) 값으로 Object 값을 받아올수있다.
-        const MainCard = ({img}) => {
-          function handleHeartClick(){
-            console.log("하트눌렀음");
-          }
-          function handleHeartMouseOver(){
-            console.log("마우스지나감");
-          }
-        
-          return (
-        <div className="main-card">
-          <img
-            src={img}
-            alt="고양이"
-            width="400"
-          />
-          <button onClick={handleHeartClick} onMouseOver={handleHeartMouseOver}>🤍</button>
-        </div>
+      const MainCard = ({ img, handleHeartClick }) => {
+        return (
+          <div className="main-card">
+            <img src={img} alt="고양이" width="400" />
+            <button onClick={handleHeartClick}>🤍</button>
+          </div>
         );
-        };
+      };
 
-        //app 을 component로 변환 -> form과 title 을 함께 상태변경하기위해
-        const App = () => {
+      const App = () => {
+        const CAT1 =
+          "https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react";
+        const CAT2 =
+          "https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn";
+        const CAT3 =
+          "https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript";
+
         const [counter, setCounter] = React.useState(1);
+        const [mainCat, setMainCat] = React.useState(CAT1);
+        const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
 
         console.log("카운터", counter);
-        // form이 전송될때마다 counter설정을 위해 fuction 자체를 props로 받아준다.->lifting state up
+
         function handleFormSubmit(event) {
           event.preventDefault();
           console.log("폼 전송됨");
           setCounter(counter + 1);
+          setMainCat(CAT2);
+        }
+
+        function handleHeartClick() {
+          console.log("하트 눌렀음");
+          setFavorites([...favorites, CAT3]);
         }
 
         return (
           <div>
             <Title>{counter}번째 고양이 가라사대</Title>
             <Form handleFormSubmit={handleFormSubmit} />
-            <MainCard img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
-            <Favorites />
+            <MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+            <Favorites favorites={favorites} />
           </div>
         );
       };
