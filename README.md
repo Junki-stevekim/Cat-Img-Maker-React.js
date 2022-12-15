@@ -1,9 +1,9 @@
 
   
 
-## React.js로 하는 고양이 짤방 생성기 토이 프로젝트
+## 🐱React.js로 하는 고양이 짤방 생성기 토이 프로젝트
 ---
-![catimgmake](https://user-images.githubusercontent.com/111727491/207796412-102abedb-cb54-4500-baf3-60836cabeb58.gif)
+![reactproject](https://user-images.githubusercontent.com/111727491/207798193-8465e56e-c905-48c0-845f-2f5a74c802e9.gif)
 ---
 - 프로젝트명 : 고양이 가라사대
 - 구현목표 : 영어로 대사를 입력하면 -> 랜덤 고양이 이미지와 입력한 영어대사를 고양이짤방으로 메이킹
