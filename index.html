@@ -26,35 +26,59 @@
   </style>
   <body>
     <div id="app"></div>
-    
 
-     <!-- 리액트 라이브러리 설정문 -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    
-    <script type="text/babel"> // 리액트 코드 작성 할 부분
+    <script type="text/babel">
       console.log("야옹");
 
-      // 리액트를 사용하는 가장큰 이유 -> 반복되는 ui 즉 component 사용을 위함
-      // component 작성규칙 -> 항상 첫글자는 대문자
-      // 인자값을 넘겨줄때 항상 porps를 사용
-      // 화살표 함수 변수명 = () => {} 사용.. 제대로공부하자!
-
-        const Title = (props) => {
+      const Title = (props) => {
         return <h1>{props.children}</h1>;
-        };
+      };
 
-        // 폼이 전송될때마다 count +! 해주기 => n번째 고양이 가라사대
-        const Form = ({ handleFormSubmit }) => {
+      const Form = ({ updateMainCat }) => {
+        const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
+        const [value, setValue] = React.useState("");
+        const [errorMessage, setErrorMessage] = React.useState("");
+
+        function handleInputChange(e) {
+          const userValue = e.target.value;
+          setErrorMessage("");
+          if (includesHangul(userValue)) {
+            setErrorMessage("한글은 입력할 수 없습니다.");
+          }
+          setValue(userValue.toUpperCase());
+        }
+
+        function handleFormSubmit(e) {
+          e.preventDefault();
+          setErrorMessage("");
+
+          if (value === "") {
+            setErrorMessage("빈 값으로 만들 수 없습니다.");
+            return;
+          }
+          updateMainCat();
+        }
+
         return (
           <form onSubmit={handleFormSubmit}>
             <input
               type="text"
               name="name"
               placeholder="영어 대사를 입력해주세요"
+              value={value}
+              onChange={handleInputChange}
             />
             <button type="submit">생성</button>
+            <p style={{ color: "red" }}>{errorMessage}</p>
           </form>
         );
       };
@@ -77,11 +101,11 @@
         );
       }
 
-      const MainCard = ({ img, handleHeartClick }) => {
+      const MainCard = ({ img, onHeartClick }) => {
         return (
           <div className="main-card">
             <img src={img} alt="고양이" width="400" />
-            <button onClick={handleHeartClick}>🤍</button>
+            <button onClick={onHeartClick}>🤍</button>
           </div>
         );
       };
@@ -98,34 +122,28 @@
         const [mainCat, setMainCat] = React.useState(CAT1);
         const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
 
-        console.log("카운터", counter);
-
-        function handleFormSubmit(event) {
-          event.preventDefault();
-          console.log("폼 전송됨");
-          setCounter(counter + 1);
+        function updateMainCat() {
           setMainCat(CAT2);
+          setCounter(counter + 1);
         }
 
         function handleHeartClick() {
-          console.log("하트 눌렀음");
           setFavorites([...favorites, CAT3]);
         }
 
         return (
           <div>
             <Title>{counter}번째 고양이 가라사대</Title>
-            <Form handleFormSubmit={handleFormSubmit} />
-            <MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+            <Form updateMainCat={updateMainCat} />
+            <MainCard img={mainCat} onHeartClick={handleHeartClick} />
             <Favorites favorites={favorites} />
           </div>
         );
       };
 
-        // React의 렌더값은 항상 최상위 tag 한개뿐. 그래서 tag를 div나 다른태그로 나누어준다
-        const 여기다가그려 = document.querySelector("#app");
+      const 여기다가그려 = document.querySelector("#app");
 
-        ReactDOM.render(<App />, 여기다가그려);
+      ReactDOM.render(<App />, 여기다가그려);
 
 
 
