@@ -46,6 +46,12 @@
       },
     };
 
+    const fetchCat = async (text) => { // 오픈 API를  JS Fetch API를 사용해 값을 받아온다. 이때 비동기방식으로 값을 받아온후 사용할 함수에 VALUE값을 넣어준다.
+    const OPEN_API_DOMAIN = "https://cataas.com";
+    const response = await fetch(`${OPEN_API_DOMAIN}/cat/says/${text}?json=true`);
+    const responseJson = await response.json();
+     return `${OPEN_API_DOMAIN}/${responseJson.url}`;
+      };
       const Title = (props) => {
         return <h1>{props.children}</h1>;
       };
@@ -72,7 +78,7 @@
             setErrorMessage("빈 값으로 만들 수 없습니다.");
             return;
           }
-          updateMainCat();
+          updateMainCat(value); // 사용자 input값을 넘겨주기
         }
 
         return (
@@ -129,8 +135,22 @@
         const [mainCat, setMainCat] = React.useState(CAT1);
         const [favorites, setFavorites] = React.useState(jsonLocalStorage.getItem('favorites') || [] ); // favorites 값이 null일때  맵에  값이 없어서 초기 배열을  정의
 
-        function updateMainCat() {
-          setMainCat(CAT2);
+
+         //앱 진입시 바로 API를 호출해서 MAIN CAT을 갈아치워주기.
+          async function setInitialCat(){
+            const newCat = await fetchCat('FirstCat');
+            setMainCat(newCat);
+          }
+          
+          React.useEffect(()=>{
+            setInitialCat();
+
+          },[])
+
+        async function updateMainCat(value) {
+          const newCat =await fetchCat(value); //fetch API 사용 사용자 input값을 받아온다.
+          
+          setMainCat(newCat); // API값을 변수로 받아서 값을 넣어준다.
           const nextCounter =counter +1;
           setCounter(nextCounter);
           jsonLocalStorage.setItem("counter",nextCounter); //로컬스토리지에 count 저장
